@@ -23,7 +23,6 @@ public class GamePanel extends JPanel implements Runnable {
     private Ball ball;
     private Score score;
 
-
     public GamePanel() {
         newPaddles();
         newBall();
@@ -51,7 +50,22 @@ public class GamePanel extends JPanel implements Runnable {
         paddle2.draw(g);
     }
     public void move() {}
-    public void checkCollision() {}
+    public void checkCollision() {
+        // Check for paddle and window collision
+        //TODO Refactor
+        if (paddle1.y <= 0) {
+            paddle1.y = 0;
+        }
+        if (paddle1.y >= (GAME_HEIGHT - PADDLE_HEIGHT)) {
+            paddle1.y = GAME_HEIGHT - PADDLE_HEIGHT;
+        }
+        if (paddle2.y <= 0) {
+            paddle2.y = 0;
+        }
+        if (paddle2.y >= (GAME_HEIGHT - PADDLE_HEIGHT)) {
+            paddle2.y = GAME_HEIGHT - PADDLE_HEIGHT;
+        }
+    }
     public void run() {
         // game loop
         long lastTime = System.nanoTime();
@@ -70,8 +84,15 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
+    // TODO Implement multiple active key events handling
     public class ActionListener extends KeyAdapter {
-        public void keyPressed(KeyEvent e) {}
-        public void keyReleased(KeyEvent e) {}
+        public void keyPressed(KeyEvent e) {
+            paddle1.keyPressed(e);
+            paddle2.keyPressed(e);
+        }
+        public void keyReleased(KeyEvent e) {
+            paddle1.keyReleased(e);
+            paddle1.keyReleased(e);
+        }
     }
 }
